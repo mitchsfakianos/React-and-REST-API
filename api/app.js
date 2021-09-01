@@ -23,7 +23,7 @@ sequelize.authenticate()
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: 'https://localhost:5000'}));
+app.use(cors( { origin: '*'}));
 app.options('*', cors())
 
 // setup morgan which gives us http request logging
