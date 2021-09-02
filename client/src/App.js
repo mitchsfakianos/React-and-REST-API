@@ -5,14 +5,17 @@ import Courses from './components/courses';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import CreateCourse from './components/CreateCourse';
-import UpdateCourse from './components/UpdateCourse';
+import UpdateCourse from './components/UpdateCourse';*/
 import Header from './components/Header';
-import UserSignOut from './components/UserSignOut';
-*/
+/*import UserSignOut from './components/UserSignOut';*/
+
 export default class App extends Component {
 	render () {
 		return (
-		  <Courses/>
+		  <div>
+		    <Header />
+		    <Courses />
+		  </div>
 		)
 	}
 }
