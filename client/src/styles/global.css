@@ -18,6 +18,8 @@ p {
     margin-bottom: 1.5rem;
     line-height: 1.5;
     hyphens: auto;
+    white-space: pre-line;  
+    vertical-align: bottom;
 }
 a {
     color: #939;
@@ -45,6 +47,8 @@ header {
 }
 header li {
     font-size: .8rem;
+    white-space: pre-line;  
+    vertical-align: bottom;
 }
 header nav a {
     color: #dbd;
@@ -110,6 +114,8 @@ header nav a:hover {
     font-weight: 300;
     margin: 0 0 1.5rem 1rem;
     line-height: 1.5;
+    white-space: pre-line;  
+    vertical-align: bottom;
 }
 .actions--bar {
     background: #e9e5f0;

@@ -1,4 +1,5 @@
-import React, { Component} from 'react'
+import React, { Component} from 'react';
+import { NavLink } from 'react-router-dom';
 
 class Courses extends Component {
   constructor() {
@@ -20,10 +21,10 @@ class Courses extends Component {
         <main>
           <div className="wrap main--grid">
           {this.state.courses.map((course) =>
-              <a className="course--module course--link" href="course-detail.html" key={course.id}>
+              <NavLink to={`/courses/${course.id}`} className="course--module course--link" key={course.id}>
                 <h2 className="course--label">Course</h2>
                 <h3 className="course--title">{course.title}</h3>
-              </a>
+              </NavLink>
           )}
             <a className="course--module course--add--module" href="create-course.html">
               <span className="course--add--title">
