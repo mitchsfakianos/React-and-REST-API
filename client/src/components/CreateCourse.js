@@ -9,25 +9,31 @@ class CreateCourse extends Component {
       description: '',
       estimatedTime: '',
       materialsNeeded: '', 
-      error: '',
+      error: ''
     };
   }
 
-  onCreateClass() {
-    let newClass = { 
-      title: this.refs.title.value,
-      description: this.refs.description.value,
-      estimatedTime: this.refs.estimatedTime.value,
-      materialsNeeded: this.refs.materialsNeeded.value
-    };
-
+  createClass(e) {        
     fetch("http://localhost:5000/api/courses", {
       method: "POST",
-      headers: {'Content-type': 'application/json'},
-      body: JSON.stringify(newClass)
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "title": `${document.getElementById("courseTitle").value}`,
+        "description": `${document.getElementById("courseDescription").value}`,
+        "estimatedTime": `${document.getElementById("estimatedTime").value}`,
+        "materialsNeeded": `${document.getElementById("materialsNeeded").value}`
+      })
     })
     .then(res=>res.json())
-    .catch(console.log);
+    .catch((err) => {
+      this.setState({
+        error: err.response.data.errors
+      })
+    });
   };
 
   render() {
@@ -35,14 +41,18 @@ class CreateCourse extends Component {
       <main>
           <div class="wrap">
               <h2>Create Course</h2>
-              <div class="validation--errors">
-                  <h3>Validation Errors</h3>
-                  <ul>
-                      <li>Please provide a value for "Title"</li>
-                      <li>Please provide a value for "Description"</li>
-                  </ul>
-              </div>
-              <form>
+              {this.state.error !== ''? (
+                <div class="validation--errors">
+                    <h3>Validation Errors</h3>
+                    <ul>
+                        <li>Please provide a value for "Title"</li>
+                        <li>Please provide a value for "Description"</li>
+                    </ul>
+                </div>
+              ) : (
+                null
+              )}
+              <form onSubmit={this.createClass.bind(this)}>
                   <div class="main--flex">
                       <div>
                           <label for="courseTitle">Course Title</label>
@@ -61,7 +71,7 @@ class CreateCourse extends Component {
                           <textarea id="materialsNeeded" ref="materials" name="materialsNeeded"></textarea>
                       </div>
                   </div>
-                  <button class="button" type="submit" onClick={this.onCreateClass}>Create Course</button><NavLink class="button button-secondary" to='/'>Cancel</NavLink>
+                  <button class="button" type="submit">Create Course</button><NavLink class="button button-secondary" to='/'>Cancel</NavLink>
               </form>
           </div>
       </main>

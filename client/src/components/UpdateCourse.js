@@ -62,7 +62,7 @@ class UpdateCourse extends Component {
                           <textarea id="materialsNeeded" name="materialsNeeded" value={this.state.course.materialsNeeded} />
                       </div>
                   </div>
-                  <button class="button" type="submit">Update Course</button><NavLink class="button button-secondary" to='/'>Cancel</NavLink>
+                  <button class="button" type="submit" onClick={this.onUpdateClass}>Update Course</button><NavLink class="button button-secondary" to='/'>Cancel</NavLink>
               </form>
           </div>
       </main>
