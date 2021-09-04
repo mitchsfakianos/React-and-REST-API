@@ -8,9 +8,31 @@ import UserSignUp from './components/UserSignUp';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
 import Header from './components/Header';
-/*import UserSignOut from './components/UserSignOut';*/
+import UserSignOut from './components/UserSignOut';
+import PrivateRoute from './components/PrivateRoute';
 
 export default class App extends Component {
+	constructor() {
+		super();
+		this.state = {
+			user: {
+				id: '',
+				firstName: '',
+				lastName: '',
+				emailAddress: '',
+				password: ''
+			}
+		}
+	}
+
+	signIn() {
+
+	}
+
+	signOut() {
+
+	}
+
 	render () {
 		return (
 		  <Router>
@@ -19,6 +41,7 @@ export default class App extends Component {
 		      <Switch>  
 		        <Route exact path="/" render={() => <Courses />} />
 		        <Route exact path="/courses/create" component={CreateCourse} />
+		        <Route exact path="/courses/:id/update" component={UpdateCourse} />
 		        <Route path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
 		      </Switch>
 		    </div>

@@ -1,5 +1,6 @@
 import React, { Component} from 'react';
 import { NavLink } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 
 class CourseDetail extends Component {
   constructor() {
@@ -26,7 +27,7 @@ class CourseDetail extends Component {
       <main>
           <div className="actions--bar">
               <div className="wrap">
-                  <a className="button" href="update-course.html">Update Course</a>
+                  <NavLink className="button" to={"/courses/" + this.state.course.id + "/update"}>Update Course</NavLink>
                   <a className="button" href="#">Delete Course</a>
                   <NavLink className="button button-secondary" to="/">Return to List</NavLink>
               </div>
@@ -40,7 +41,7 @@ class CourseDetail extends Component {
                             <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name">{this.state.course.title}</h4>
                             <p>By Joe Smith</p>
-                            <p>{this.state.course.description}</p>
+                            <ReactMarkdown children={this.state.course.description} />
                         </div>
                         <div>
                             <h3 class="course--detail--title">Estimated Time</h3>
@@ -48,7 +49,7 @@ class CourseDetail extends Component {
 
                             <h3 class="course--detail--title">Materials Needed</h3>
                             <ul class="course--detail--list">
-                              { this.state.course.materialsNeeded }
+                              <ReactMarkdown children={this.state.course.materialsNeeded} />
                             </ul>
                         </div>
                   </div>
