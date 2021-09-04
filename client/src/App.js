@@ -18,7 +18,8 @@ export default class App extends Component {
 		      <Header />
 		      <Switch>  
 		        <Route exact path="/" render={() => <Courses />} />
-		        <Route exact path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
+		        <Route exact path="/courses/create" component={CreateCourse} />
+		        <Route path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
 		      </Switch>
 		    </div>
 		  </Router>
