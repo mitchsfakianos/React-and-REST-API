@@ -1,6 +1,7 @@
 import './styles/global.css';
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Provider } from './components/Context/index.js'
 import Courses from './components/courses';
 import CourseDetail from './components/CourseDetail';
 import UserSignIn from './components/UserSignIn';
@@ -35,20 +36,22 @@ export default class App extends Component {
 
 	render () {
 		return (
-		  <Router>
-		    <div>
-		      <Header />
-		      <Switch>  
-		        <Route exact path="/" render={() => <Courses />} />
-		        <Route exact path="/courses/create" component={CreateCourse} />
-		        <Route exact path="/courses/:id/update" component={UpdateCourse} />
-		        <Route path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
-		        <Route exact path="/signin" render={() => <UserSignIn />} />
-                <Route exact path="/signup" render={() => <UserSignUp />} />
-                <Route exact path="/signout" render={() => <UserSignOut />} />
-		      </Switch>
-		    </div>
-		  </Router>
+		  <Provider value={this.state.user}>
+			  <Router>
+			    <div>
+			      <Header />
+			      <Switch>  
+			        <Route exact path="/" render={() => <Courses />} />
+			        <Route exact path="/courses/create" component={CreateCourse} />
+			        <Route exact path="/courses/:id/update" component={UpdateCourse} />
+			        <Route path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
+			        <Route exact path="/signin" render={() => <UserSignIn />} />
+		            <Route exact path="/signup" render={() => <UserSignUp />} />
+		            <Route exact path="/signout" render={() => <UserSignOut />} />
+			      </Switch>
+			    </div>
+			  </Router>
+		  </Provider>
 		)
 	}
 }
