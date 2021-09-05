@@ -47,11 +47,11 @@ router.get('/courses', asyncHandler(async(req, res) => {
 }));
 
 // allows an authenticated user to add a course
-router.post('/courses', /*authenticateUser,*/ asyncHandler(async(req, res) => {
-/*  const authUser = req.currentUser;*/
+router.post('/courses', authenticateUser, asyncHandler(async(req, res) => {
+  const authUser = req.currentUser;
 
   try {
-/*    await User.findByPk(authUser.id);*/
+    await User.findByPk(authUser.id);
     const course = await Course.create(req.body);
     res.status(201).location('/courses/' + course.id).end();
   } catch (error) {

@@ -43,6 +43,9 @@ export default class App extends Component {
 		        <Route exact path="/courses/create" component={CreateCourse} />
 		        <Route exact path="/courses/:id/update" component={UpdateCourse} />
 		        <Route path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
+		        <Route exact path="/signin" render={() => <UserSignIn />} />
+                <Route exact path="/signup" render={() => <UserSignUp />} />
+                <Route exact path="/signout" render={() => <UserSignOut />} />
 		      </Switch>
 		    </div>
 		  </Router>
