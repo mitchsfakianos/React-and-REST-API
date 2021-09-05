@@ -21,22 +21,77 @@ export default class App extends Component {
 				firstName: '',
 				lastName: '',
 				emailAddress: '',
-				password: ''
+				password: '',
+				isAuthenticated: false
 			}
-		}
+		};
+
+		this.signIn = this.signIn.bind(this);
+    	this.signOut = this.signOut.bind(this);
 	}
 
-	signIn() {
+	// the sign in method gets the user route and checks if it matches with the information provided, then saves the users info in the global state
+	signIn(emailAddress, password) {
+		let h = new Headers();
+		h.append('Accept', 'application/json');
+		h.append('Content-Type', 'application/json');
+		let encoded = window.btoa(`${emailAddress}:${password}`)
+		let auth = 'Basic ' + encoded;
+		h.append('Authorization', auth);
 
+		fetch("http://localhost:5000/api/users", {
+	      method: "GET",
+	      mode: 'cors',
+	      headers: h,
+	      auth: {
+	      	username: emailAddress,
+	      	password: password
+	      }
+	    })
+	    .then(res=> {
+	    	if (res.status == 200) {
+	    	  res.json().then(data => 
+		          this.setState({
+			        user: {
+			          id: data.id,
+			          firstName: data.firstName,
+			          lastName: data.lastName,
+			          emailAddress: data.emailAddress,
+			          password: data.password,
+			          isAuthenticated: true
+			        }
+			      }) 
+	    	  );		
+	    	} 
+	    })
+	    .catch((err) => {
+	    	console.log("error is here")
+		    console.log(err);
+	    })
 	}
 
+	// the sign out method empties out the values for the global user state
 	signOut() {
-
+		this.setState(
+	      {
+	        user: {
+	          id: '',
+	          firstName: '',
+	          lastName: '',
+	          emailAddress: '',
+	          password: '',
+	          isAuthenticated: false
+	        }
+	      });
 	}
 
 	render () {
 		return (
-		  <Provider value={this.state.user}>
+		  <Provider value={{
+		  	state: this.state.user,
+		  	signin: this.signIn,
+		  	signout: this.signOut
+		  }}>
 			  <Router>
 			    <div>
 			      <Header />
@@ -45,7 +100,7 @@ export default class App extends Component {
 			        <Route exact path="/courses/create" component={CreateCourse} />
 			        <Route exact path="/courses/:id/update" component={UpdateCourse} />
 			        <Route path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
-			        <Route exact path="/signin" render={() => <UserSignIn />} />
+			        <Route exact path="/signin" render={() => <UserSignIn signIn={this.signIn}/>} />
 		            <Route exact path="/signup" render={() => <UserSignUp />} />
 		            <Route exact path="/signout" render={() => <UserSignOut />} />
 			      </Switch>

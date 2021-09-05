@@ -22,24 +22,13 @@ class CourseDetail extends Component {
       });  
   }
 
-  deleteCourse() {
-    const id = this.state.course.id;
-
-    fetch(`http://localhost:5000/api/courses/${id}`, {
-      method: "DELETE"
-    })
-      .catch((err) => {
-          console.log(err);
-      }); 
-  }
-
   render() {
     return (
       <main>
           <div className="actions--bar">
               <div className="wrap">
                   <NavLink className="button" to={"/courses/" + this.state.course.id + "/update"}>Update Course</NavLink>
-                  <a className="button" onClick={this.deleteCourse()}>Delete Course</a>
+                  <a className="button">Delete Course</a>
                   <NavLink className="button button-secondary" to="/">Return to List</NavLink>
               </div>
           </div>
