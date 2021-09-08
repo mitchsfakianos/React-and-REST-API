@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom';
-import { Consumer } from './Context/index.js'
+import { Consumer } from './Context/index.js';
 
 export default class Header extends Component {
   render() {
@@ -25,12 +25,10 @@ export default class Header extends Component {
                         <li><NavLink to='/signin' className="signin">Sign In</NavLink></li>
                       </ul>
                     </nav>
-                  )
-                }
+                )}
               </div>
             </header>
-          )
-        }}
+          )}}
       </Consumer>
     )
   }

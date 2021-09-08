@@ -49,7 +49,7 @@ export default class App extends Component {
 	      }
 	    })
 	    .then(res=> {
-	    	if (res.status == 200) {
+	    	if (res.status === 200) {
 	    	  res.json().then(data => 
 		          this.setState({
 			        user: {
@@ -97,8 +97,8 @@ export default class App extends Component {
 			      <Header />
 			      <Switch>  
 			        <Route exact path="/" render={() => <Courses />} />
-			        <Route exact path="/courses/create" component={CreateCourse} />
-			        <Route exact path="/courses/:id/update" component={UpdateCourse} />
+			        <PrivateRoute exact path="/courses/create" component={CreateCourse} />
+			        <PrivateRoute exact path="/courses/:id/update" component={UpdateCourse} />
 			        <Route path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
 			        <Route exact path="/signin" render={() => <UserSignIn signIn={this.signIn}/>} />
 		            <Route exact path="/signup" render={() => <UserSignUp />} />

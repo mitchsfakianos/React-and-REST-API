@@ -1,6 +1,7 @@
 import React, { Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import { Consumer } from './Context/index.js'
 
 class CourseDetail extends Component {
   constructor() {
@@ -24,38 +25,48 @@ class CourseDetail extends Component {
 
   render() {
     return (
-      <main>
-          <div className="actions--bar">
-              <div className="wrap">
-                  <NavLink className="button" to={"/courses/" + this.state.course.id + "/update"}>Update Course</NavLink>
-                  <a className="button">Delete Course</a>
-                  <NavLink className="button button-secondary" to="/">Return to List</NavLink>
-              </div>
-          </div>
-          
-          <div className="wrap">
-              <h2>Course Detail</h2>
-              <form>
-                  <div className="main--flex">
-                        <div>
-                            <h3 className="course--detail--title">Course</h3>
-                            <h4 className="course--name">{this.state.course.title}</h4>
-                            <p>By Joe Smith</p>
-                            <ReactMarkdown children={this.state.course.description} />
+      <Consumer>
+        { value => (
+            <main>
+                <div className="actions--bar">
+                    { value.state.isAuthenticated && value.state.id === this.state.course.userId? (
+                        <div className="wrap">
+                          <NavLink className="button" to={"/courses/" + this.state.course.id + "/update"}>Update Course</NavLink>
+                          <a className="button">Delete Course</a>
                         </div>
-                        <div>
-                            <h3 class="course--detail--title">Estimated Time</h3>
-                            <p>{this.state.course.estimatedTime}</p>
+                    ) : (
+                      null
+                    )} 
+                    <div className="wrap">
+                        <NavLink className="button button-secondary" to="/">Return to List</NavLink>
+                    </div>
+                </div>
+                
+                <div className="wrap">
+                    <h2>Course Detail</h2>
+                    <form>
+                        <div className="main--flex">
+                              <div>
+                                  <h3 className="course--detail--title">Course</h3>
+                                  <h4 className="course--name">{this.state.course.title}</h4>
+                                  <p>By Joe Smith</p>
+                                  <ReactMarkdown children={this.state.course.description} />
+                              </div>
+                              <div>
+                                  <h3 class="course--detail--title">Estimated Time</h3>
+                                  <p>{this.state.course.estimatedTime}</p>
 
-                            <h3 class="course--detail--title">Materials Needed</h3>
-                            <ul class="course--detail--list">
-                              <ReactMarkdown children={this.state.course.materialsNeeded} />
-                            </ul>
+                                  <h3 class="course--detail--title">Materials Needed</h3>
+                                  <ul class="course--detail--list">
+                                    <ReactMarkdown children={this.state.course.materialsNeeded} />
+                                  </ul>
+                              </div>
                         </div>
-                  </div>
-              </form>
-          </div>
-      </main>
+                    </form>
+                </div>
+            </main>
+        )}
+      </Consumer>
     )
   }
 };
