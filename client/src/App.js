@@ -13,8 +13,8 @@ import UserSignOut from './components/UserSignOut';
 import PrivateRoute from './components/PrivateRoute';
 
 export default class App extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			user: {
 				id: '',
@@ -22,6 +22,7 @@ export default class App extends Component {
 				lastName: '',
 				emailAddress: '',
 				password: '',
+				auth: '',
 				isAuthenticated: false
 			}
 		};
@@ -58,6 +59,7 @@ export default class App extends Component {
 			          lastName: data.lastName,
 			          emailAddress: data.emailAddress,
 			          password: data.password,
+			          auth: encoded,
 			          isAuthenticated: true
 			        }
 			      }) 
@@ -65,7 +67,6 @@ export default class App extends Component {
 	    	} 
 	    })
 	    .catch((err) => {
-	    	console.log("error is here")
 		    console.log(err);
 	    })
 	}
@@ -80,6 +81,7 @@ export default class App extends Component {
 	          lastName: '',
 	          emailAddress: '',
 	          password: '',
+	          auth: '',
 	          isAuthenticated: false
 	        }
 	      });
@@ -97,7 +99,7 @@ export default class App extends Component {
 			      <Header />
 			      <Switch>  
 			        <Route exact path="/" render={() => <Courses />} />
-			        <PrivateRoute exact path="/courses/create" component={CreateCourse} />
+			        <PrivateRoute exact path="/courses/create" component={CreateCourse} user={this.state.user}/>
 			        <PrivateRoute exact path="/courses/:id/update" component={UpdateCourse} />
 			        <Route path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
 			        <Route exact path="/signin" render={() => <UserSignIn signIn={this.signIn}/>} />
