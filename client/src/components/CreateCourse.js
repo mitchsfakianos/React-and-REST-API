@@ -44,7 +44,9 @@ class CreateCourse extends Component {
     })
     .then(res=>res.json())
     .catch((err) => {
-      console.log(err);
+      this.setState({
+        error: err.response.data.errors
+      });
     });
   };
 
