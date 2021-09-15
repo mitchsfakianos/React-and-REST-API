@@ -7,12 +7,7 @@ class UpdateCourse extends Component {
   constructor() {
     super();
     this.state = {
-      course: {
-        title: '',
-        description: '',
-        estimatedTime: '',
-        materialsNeeded: ''
-      },
+      course: {},
       err: ''
     };
   }
@@ -38,6 +33,7 @@ class UpdateCourse extends Component {
     event.preventDefault();
 
     const id = this.props.match.params.id;
+    const url = ("/courses/" + id);
 
     let h = new Headers();
     h.append('Accept', 'application/json');
@@ -61,7 +57,8 @@ class UpdateCourse extends Component {
         "userId": userId
       })
     })
-    .then(resp => resp.text()).then(console.log)
+    .then(res => res.json())
+    .then(window.location.href=url)
     .catch(console.log);
   }
 
@@ -91,7 +88,7 @@ class UpdateCourse extends Component {
                             <textarea id="materialsNeeded" name="materialsNeeded" defaultValue={this.state.course.materialsNeeded} />
                         </div>
                     </div>
-                    <button class="button" type="submit" onClick={(event) => this.onUpdateClass(event, value.state.auth, value.state.emailAddress, value.state.password, value.state.id)}>Update Course</button><NavLink class="button button-secondary" to='/'>Cancel</NavLink>
+                    <button class="button" type="submit" onClick={(event) => this.onUpdateClass(event, value.state.auth, value.state.emailAddress, value.state.password, value.state.id)}>Update Course</button><NavLink class="button button-secondary" to={`/courses/${this.props.match.params.id}`}>Cancel</NavLink>
                 </form>
             </div>
         </main>
