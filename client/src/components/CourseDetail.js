@@ -23,6 +23,31 @@ class CourseDetail extends Component {
       });  
   }
 
+  deleteCourse(event, enc, email, pass) {
+    event.preventDefault();
+
+    const id = this.props.match.params.id;
+
+    let h = new Headers();
+    h.append('Accept', 'application/json');
+    h.append('Content-Type', 'application/json');
+    let encoded = enc;
+    let auth = 'Basic ' + encoded;
+    h.append('Authorization', auth);
+
+    fetch(`http://localhost:5000/api/courses/${id}`, {
+      method: "DELETE",
+      mode: 'cors',
+      headers: h,
+      auth: {
+        username: email,
+        password: pass
+      }
+    })
+    .then(window.location.href="/")
+    .catch(console.log)
+  }
+
   render() {
     return (
       <Consumer>
@@ -32,7 +57,7 @@ class CourseDetail extends Component {
                     { value.state.isAuthenticated && value.state.id === this.state.course.userId? (
                         <div className="wrap">
                           <NavLink className="button" to={"/courses/" + this.state.course.id + "/update"}>Update Course</NavLink>
-                          <a className="button">Delete Course</a>
+                          <a className="button" onClick={(event) => this.deleteCourse(event, value.state.auth, value.state.emailAddress, value.state.password)}>Delete Course</a>
                         </div>
                     ) : (
                       null
