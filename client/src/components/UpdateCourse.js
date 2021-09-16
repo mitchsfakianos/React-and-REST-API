@@ -1,6 +1,5 @@
 import React, { Component} from 'react';
 import { NavLink } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
 import { Consumer } from './Context/index.js';
 
 class UpdateCourse extends Component {

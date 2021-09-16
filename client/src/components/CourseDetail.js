@@ -57,7 +57,7 @@ class CourseDetail extends Component {
                     { value.state.isAuthenticated && value.state.id === this.state.course.userId? (
                         <div className="wrap">
                           <NavLink className="button" to={"/courses/" + this.state.course.id + "/update"}>Update Course</NavLink>
-                          <a className="button" onClick={(event) => this.deleteCourse(event, value.state.auth, value.state.emailAddress, value.state.password)}>Delete Course</a>
+                          <a className="button" onClick={(event) => this.deleteCourse(event, value.state.auth, value.state.emailAddress, value.state.password)} href="/">Delete Course</a>
                         </div>
                     ) : (
                       null

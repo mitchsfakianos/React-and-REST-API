@@ -10,14 +10,13 @@ class CreateCourse extends Component {
       description: '',
       estimatedTime: '',
       materialsNeeded: '', 
-      error: ''
+      titleError: '',
+      descError: ''
     };
   }
 
   createClass(id, enc, email, pass, event) {        
     event.preventDefault();
-
-    console.log(enc)
 
     let h = new Headers();
     h.append('Accept', 'application/json');
@@ -26,28 +25,55 @@ class CreateCourse extends Component {
     let auth = 'Basic ' + encoded;
     h.append('Authorization', auth);
 
-    fetch("http://localhost:5000/api/courses", {
-      method: "POST",
-      mode: 'cors',
-      headers: h,
-      auth: {
-        username: email,
-        password: pass
-      },
-      body: JSON.stringify({
-        "title": `${(document.getElementById("courseTitle").value)}`,
-        "description": `${document.getElementById("courseDescription").value}`,
-        "estimatedTime": `${document.getElementById("estimatedTime").value}`,
-        "materialsNeeded": `${document.getElementById("materialsNeeded").value}`,
-        "userId": id
+    let title = document.getElementById("courseTitle").value;
+    let description = document.getElementById("courseDescription").value;
+    let time = document.getElementById("estimatedTime").value;
+    let materials = document.getElementById("materialsNeeded").value;
+
+    if (title !== '' && description !== '') {
+      fetch("http://localhost:5000/api/courses", {
+        method: "POST",
+        mode: 'cors',
+        headers: h,
+        auth: {
+          username: email,
+          password: pass
+        },
+        body: JSON.stringify({
+          "title": `${title}`,
+          "description": `${description}`,
+          "estimatedTime": `${time}`,
+          "materialsNeeded": `${materials}`,
+          "userId": id
+        })
       })
-    })
-    .then(res=>res.json())
-    .catch((err) => {
-      this.setState({
-        error: err.response.data.errors
+      .then(res=>res.json())
+      .then(window.location.href="/")
+      .catch((err) => {
+        console.error(err);
       });
-    });
+    }
+
+    if (title === '') {
+      this.setState({
+        titleError: 'Please provide a value for "Title"'
+      })
+      console.log(this.state.titleError)
+    } else {
+      this.setState({
+        titleError: ''
+      })
+    }
+
+    if (description === '') {
+      this.setState({
+        descError: 'Please provide a value for "Description"'
+      })
+    } else {
+      this.setState({
+        descError: ''
+      })
+    }
   };
 
   render() {
@@ -57,12 +83,16 @@ class CreateCourse extends Component {
           <main>
               <div class="wrap">
                   <h2>Create Course</h2>
-                  {this.state.error !== ''? (
+                  {this.state.titleError !== '' || this.state.descError !== ''? (
                     <div class="validation--errors">
                         <h3>Validation Errors</h3>
                         <ul>
-                            <li>Please provide a value for "Title"</li>
-                            <li>Please provide a value for "Description"</li>
+                            {this.state.titleError !== ''? (
+                            <li>{this.state.titleError}</li>
+                            ) : ( null )}
+                            {this.state.descError !== ''? (
+                            <li>{this.state.descError}</li>
+                            ) : ( null )}
                         </ul>
                     </div>
                   ) : (
