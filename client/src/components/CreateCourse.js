@@ -10,8 +10,7 @@ class CreateCourse extends Component {
       description: '',
       estimatedTime: '',
       materialsNeeded: '', 
-      titleError: '',
-      descError: ''
+      error: ''
     };
   }
 
@@ -30,50 +29,41 @@ class CreateCourse extends Component {
     let time = document.getElementById("estimatedTime").value;
     let materials = document.getElementById("materialsNeeded").value;
 
-    if (title !== '' && description !== '') {
-      fetch("http://localhost:5000/api/courses", {
-        method: "POST",
-        mode: 'cors',
-        headers: h,
-        auth: {
-          username: email,
-          password: pass
-        },
-        body: JSON.stringify({
-          "title": `${title}`,
-          "description": `${description}`,
-          "estimatedTime": `${time}`,
-          "materialsNeeded": `${materials}`,
-          "userId": id
-        })
-      })
-      .then(res=>res.json())
-      .then(window.location.href="/")
-      .catch((err) => {
-        console.error(err);
-      });
-    }
-
-    if (title === '') {
-      this.setState({
-        titleError: 'Please provide a value for "Title"'
-      })
-      console.log(this.state.titleError)
-    } else {
-      this.setState({
-        titleError: ''
-      })
+    if (title === '') { // setting empty values to null so they will be caught by the API, otherwise an empty string goes through
+      title = null;
     }
 
     if (description === '') {
-      this.setState({
-        descError: 'Please provide a value for "Description"'
+      description = null;
+    } 
+
+    fetch("http://localhost:5000/api/courses", {
+      method: "POST",
+      mode: 'cors',
+      headers: h,
+      auth: {
+        username: email,
+        password: pass
+      },
+      body: JSON.stringify({
+        "title": title,
+        "description": description,
+        "estimatedTime": time,
+        "materialsNeeded": materials,
+        "userId": id
       })
-    } else {
+    })
+    .then((res) => {
+      if (res.status === 400) {
+        return res.json()
+      } 
+    })
+    .then((data) => {
       this.setState({
-        descError: ''
+        error: data.errors
       })
-    }
+      console.log(this.state.error)
+    });
   };
 
   render() {
@@ -83,16 +73,12 @@ class CreateCourse extends Component {
           <main>
               <div class="wrap">
                   <h2>Create Course</h2>
-                  {this.state.titleError !== '' || this.state.descError !== ''? (
+                  {this.state.error.length !== 0?(
                     <div class="validation--errors">
                         <h3>Validation Errors</h3>
                         <ul>
-                            {this.state.titleError !== ''? (
-                            <li>{this.state.titleError}</li>
-                            ) : ( null )}
-                            {this.state.descError !== ''? (
-                            <li>{this.state.descError}</li>
-                            ) : ( null )}
+                        {this.state.error[0]?(<li>{this.state.error[0]}</li>):(null)}
+                        {this.state.error[1]?(<li>{this.state.error[1]}</li>):(null)}
                         </ul>
                     </div>
                   ) : (
