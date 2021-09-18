@@ -8,7 +8,9 @@ class CourseDetail extends Component {
     super();
     this.state = {
       course: [],
-      user: []
+      user: [],
+      firstName: '',
+      lastName: ''
     };
   }
 
@@ -17,10 +19,15 @@ class CourseDetail extends Component {
 
     fetch(`http://localhost:5000/api/courses/${id}`)
       .then(response => response.json())
-      .then(data => this.setState({ course: data }))
+      .then(data => {
+        this.setState({ course: data, 
+          firstName: data.User.firstName,
+          lastName: data.User.lastName
+        })
+      })
       .catch((err) => {
           console.log(err);
-      });  
+      }); 
   }
 
   deleteCourse(event, enc, email, pass) {
@@ -74,7 +81,7 @@ class CourseDetail extends Component {
                               <div>
                                   <h3 className="course--detail--title">Course</h3>
                                   <h4 className="course--name">{this.state.course.title}</h4>
-                                  <p>By {value.state.firstName} {value.state.lastName}</p>
+                                  <p>By {this.state.firstName} {this.state.lastName}</p>
                                   <ReactMarkdown children={this.state.course.description} />
                               </div>
                               <div>

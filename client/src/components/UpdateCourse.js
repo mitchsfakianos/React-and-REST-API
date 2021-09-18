@@ -7,7 +7,7 @@ class UpdateCourse extends Component {
     super();
     this.state = {
       course: {},
-      err: ''
+      error: ''
     };
   }
 
@@ -21,11 +21,14 @@ class UpdateCourse extends Component {
           title: data.title,
           description: data.description,
           estimatedTime: data.estimatedTime,
-          materialsNeeded: data.materialsNeeded
+          materialsNeeded: data.materialsNeeded,
+          user: data.User
         } }))
       .catch((err) => {
           console.log(err);
-      });  
+      });
+
+    console.log(this.state.course.User)  
   }
 
   onUpdateClass(event, enc, email, pass, userId) {
@@ -40,6 +43,20 @@ class UpdateCourse extends Component {
     let auth = 'Basic ' + enc;
     h.append('Authorization', auth);
 
+    // grabbing each value from the form after submission
+    let title = document.getElementById("courseTitle").value;
+    let description = document.getElementById("courseDescription").value;
+    let time = document.getElementById("estimatedTime").value;
+    let materials = document.getElementById("materialsNeeded").value;
+
+    if (title === '') { // setting empty values to null so they will be caught by the API, otherwise an empty string goes through
+      title = null;
+    }
+
+    if (description === '') {
+      description = null;
+    } 
+
     fetch(`http://localhost:5000/api/courses/${id}`, {
       method: "PUT",
       mode: 'cors',
@@ -49,15 +66,26 @@ class UpdateCourse extends Component {
         password: pass
       },
       body: JSON.stringify({
-        "title": `${(document.getElementById("courseTitle").value)}`,
-        "description": `${document.getElementById("courseDescription").value}`,
-        "estimatedTime": `${document.getElementById("estimatedTime").value}`,
-        "materialsNeeded": `${document.getElementById("materialsNeeded").value}`,
+        "title": title,
+        "description": description,
+        "estimatedTime": time,
+        "materialsNeeded": materials,
         "userId": userId
       })
     })
-    .then(res => res.json())
-    .then(window.location.href=url)
+    .then((res) => {
+      if(res.status === 204) {
+        console.log("hi")
+        window.location.href="/";
+      } else {
+        res.json();
+      }
+    })
+    .then((data) => {
+      this.setState({
+        error: data.errors
+      })
+    })
     .catch(console.log);
   }
 
@@ -68,13 +96,24 @@ class UpdateCourse extends Component {
         <main>
             <div class="wrap">
                 <h2>Update Course</h2>
+                  {this.state.error.length !== 0?( // validation errors div shows only the field that is empty 
+                    <div class="validation--errors">
+                        <h3>Validation Errors</h3>
+                        <ul>
+                        {this.state.error[0]?(<li>{this.state.error[0]}</li>):(null)}
+                        {this.state.error[1]?(<li>{this.state.error[1]}</li>):(null)}
+                        </ul>
+                    </div>
+                  ) : (
+                    null
+                  )}
                 <form>
                     <div class="main--flex">
                         <div>
                             <label for="courseTitle">Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" defaultValue={this.state.course.title}/>
 
-                            <p>By Joe Smith</p>
+                            <p>By {this.state.course.User.firstName} {value.state.lastName}</p>
 
                             <label for="courseDescription">Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" defaultValue={this.state.course.description} />

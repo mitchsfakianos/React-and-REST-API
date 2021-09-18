@@ -24,6 +24,7 @@ class CreateCourse extends Component {
     let auth = 'Basic ' + encoded;
     h.append('Authorization', auth);
 
+    // grabbing each value from the form after submission
     let title = document.getElementById("courseTitle").value;
     let description = document.getElementById("courseDescription").value;
     let time = document.getElementById("estimatedTime").value;
@@ -53,7 +54,7 @@ class CreateCourse extends Component {
         "userId": id
       })
     })
-    .then((res) => {
+    .then((res) => { // if we get a bad request, we read the data and put the errors into the error state
       if (res.status === 400) {
         return res.json()
       } 
@@ -62,7 +63,6 @@ class CreateCourse extends Component {
       this.setState({
         error: data.errors
       })
-      console.log(this.state.error)
     });
   };
 
@@ -73,7 +73,7 @@ class CreateCourse extends Component {
           <main>
               <div class="wrap">
                   <h2>Create Course</h2>
-                  {this.state.error.length !== 0?(
+                  {this.state.error.length !== 0?( // validation errors div shows only the field that is empty 
                     <div class="validation--errors">
                         <h3>Validation Errors</h3>
                         <ul>
@@ -90,7 +90,7 @@ class CreateCourse extends Component {
                               <label for="courseTitle">Course Title</label>
                               <input id="courseTitle" name="title" type="text" />
 
-                              <p>By Joe Smith</p>
+                              <p>By {value.state.firstName} {value.state.lastName}</p>
 
                               <label for="courseDescription">Course Description</label>
                               <textarea id="courseDescription" name="courseDescription"></textarea>
@@ -103,6 +103,7 @@ class CreateCourse extends Component {
                               <textarea id="materialsNeeded" name="materialsNeeded"></textarea>
                           </div>
                       </div>
+                      // once this form is submitted through the button click, createclass function is called
                       <button class="button" type="submit" onClick={(event) => this.createClass(value.state.id, value.state.auth, value.state.emailAddress, value.state.password, event)}>Create Course</button><NavLink class="button button-secondary" to='/'>Cancel</NavLink>
                   </form>
               </div>
