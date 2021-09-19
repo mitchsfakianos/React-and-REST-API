@@ -54,7 +54,7 @@ class CreateCourse extends Component {
         "userId": id
       })
     })
-    .then((res) => { // if we get a bad request, we read the data and put the errors into the error state
+    .then((res) => { /* if we get a bad request, we read the data and put the errors into the error state */
       if (res.status === 400) {
         return res.json()
       } 
@@ -73,7 +73,7 @@ class CreateCourse extends Component {
           <main>
               <div class="wrap">
                   <h2>Create Course</h2>
-                  {this.state.error.length !== 0?( // validation errors div shows only the field that is empty 
+                  {this.state.error.length !== 0?( /* validation errors div shows only the field that is empty */ 
                     <div class="validation--errors">
                         <h3>Validation Errors</h3>
                         <ul>
@@ -103,7 +103,7 @@ class CreateCourse extends Component {
                               <textarea id="materialsNeeded" name="materialsNeeded"></textarea>
                           </div>
                       </div>
-                      // once this form is submitted through the button click, createclass function is called
+                      {/* once this form is submitted through the button click, createclass function is called*/}
                       <button class="button" type="submit" onClick={(event) => this.createClass(value.state.id, value.state.auth, value.state.emailAddress, value.state.password, event)}>Create Course</button><NavLink class="button button-secondary" to='/'>Cancel</NavLink>
                   </form>
               </div>

@@ -85,11 +85,11 @@ class CourseDetail extends Component {
                                   <ReactMarkdown children={this.state.course.description} />
                               </div>
                               <div>
-                                  <h3 class="course--detail--title">Estimated Time</h3>
+                                  <h3 className="course--detail--title">Estimated Time</h3>
                                   <p>{this.state.course.estimatedTime}</p>
 
-                                  <h3 class="course--detail--title">Materials Needed</h3>
-                                  <ul class="course--detail--list">
+                                  <h3 className="course--detail--title">Materials Needed</h3>
+                                  <ul className="course--detail--list">
                                     <ReactMarkdown children={this.state.course.materialsNeeded} />
                                   </ul>
                               </div>

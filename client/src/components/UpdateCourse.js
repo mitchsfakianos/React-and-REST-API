@@ -7,7 +7,9 @@ class UpdateCourse extends Component {
     super();
     this.state = {
       course: {},
-      error: ''
+      error: '',
+      firstName: '',
+      lastName: ''
     };
   }
 
@@ -16,26 +18,26 @@ class UpdateCourse extends Component {
 
     fetch(`http://localhost:5000/api/courses/${id}`)
       .then(response => response.json())
-      .then(data => this.setState({ 
+      .then(data => this.setState({  /* I could not access any of the properties in the User object in the render section through the course. So I assigned them to their own states here and in course detail */
         course: {
           title: data.title,
           description: data.description,
           estimatedTime: data.estimatedTime,
           materialsNeeded: data.materialsNeeded,
           user: data.User
-        } }))
+        }, 
+        firstName: data.User.firstName,
+        lastName: data.User.lastName
+      }))
       .catch((err) => {
           console.log(err);
       });
-
-    console.log(this.state.course.User)  
   }
 
   onUpdateClass(event, enc, email, pass, userId) {
     event.preventDefault();
 
     const id = this.props.match.params.id;
-    const url = ("/courses/" + id);
 
     let h = new Headers();
     h.append('Accept', 'application/json');
@@ -75,7 +77,6 @@ class UpdateCourse extends Component {
     })
     .then((res) => {
       if(res.status === 204) {
-        console.log("hi")
         window.location.href="/";
       } else {
         res.json();
@@ -113,7 +114,7 @@ class UpdateCourse extends Component {
                             <label for="courseTitle">Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" defaultValue={this.state.course.title}/>
 
-                            <p>By {this.state.course.User.firstName} {value.state.lastName}</p>
+                            <p>By {this.state.firstName} {this.state.lastName}</p>
 
                             <label for="courseDescription">Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" defaultValue={this.state.course.description} />
