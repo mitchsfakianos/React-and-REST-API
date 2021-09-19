@@ -36,7 +36,7 @@ export default class App extends Component {
 		let h = new Headers();
 		h.append('Accept', 'application/json');
 		h.append('Content-Type', 'application/json');
-		let encoded = window.btoa(`${emailAddress}:${password}`)
+		let encoded = window.btoa(`${emailAddress}:${password}`) // this was my solution for the authorization, so this encoded value is passed around through different pages for when it is required
 		let auth = 'Basic ' + encoded;
 		h.append('Authorization', auth);
 

@@ -51,7 +51,7 @@ class CourseDetail extends Component {
         password: pass
       }
     })
-    .then(window.location.href="/")
+    .then(window.location.href="/") // user is redirected after deleting a page
     .catch(console.log)
   }
 

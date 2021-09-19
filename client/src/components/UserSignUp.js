@@ -6,8 +6,6 @@ class UserSignUp extends Component {
     constructor() {
         super();
         this.state = { 
-            emailAddress: '',
-            password: '',
             error: ''
         };
     }
@@ -20,7 +18,7 @@ class UserSignUp extends Component {
     let emailAddress = document.getElementById("emailAddress").value;
     let password = document.getElementById("password").value;
 
-    if (firstName === '') {
+    if (firstName === '') { // setting these values to null if they are empty strings so they will be caught by the api
         firstName = null;
     } 
     if (lastName === '') {
@@ -48,8 +46,8 @@ class UserSignUp extends Component {
       })
     })
     .then((res) => {
-      if(res.status === 204) {
-        window.location.href="/";
+      if(res.status === 204) { // if it is a successful sign up, the user is directed to sign in, if not the errors will be displayed
+        window.location.href="/signin";
       } else {
         return res.json();
       }
