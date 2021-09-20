@@ -76,9 +76,7 @@ class UpdateCourse extends Component {
       })
     })
     .then((res) => {
-      if(res.status === 204) {
-        window.location.href="/";
-      } else {
+      if(res.status !== 204) {
         res.json();
       }
     })

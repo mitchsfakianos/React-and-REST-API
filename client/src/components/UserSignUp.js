@@ -13,6 +13,8 @@ class UserSignUp extends Component {
   createUser(event) {
     event.preventDefault();
 
+    const {context} = this.props;
+
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
     let emailAddress = document.getElementById("emailAddress").value;
@@ -46,8 +48,8 @@ class UserSignUp extends Component {
       })
     })
     .then((res) => {
-      if(res.status === 204) { // if it is a successful sign up, the user is directed to sign in, if not the errors will be displayed
-        window.location.href="/signin";
+      if(res.status === 201) { // if it is a successful sign up, the user is signed in, if not the errors are displayed
+        this.props.signIn(emailAddress, password);
       } else {
         return res.json();
       }

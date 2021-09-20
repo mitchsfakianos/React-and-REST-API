@@ -57,13 +57,13 @@ class CreateCourse extends Component {
     .then((res) => { /* if we get a bad request, we read the data and put the errors into the error state */
       if (res.status === 400) {
         return res.json()
+        .then((data) => {
+          this.setState({
+            error: data.errors
+          })
+        })
       } 
     })
-    .then((data) => {
-      this.setState({
-        error: data.errors
-      })
-    });
   };
 
   render() {

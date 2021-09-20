@@ -103,7 +103,7 @@ export default class App extends Component {
 			        <PrivateRoute exact path="/courses/:id/update" component={UpdateCourse} />
 			        <Route path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
 			        <Route exact path="/signin" render={() => <UserSignIn signIn={this.signIn}/>} />
-		            <Route exact path="/signup" render={() => <UserSignUp />} />
+		            <Route exact path="/signup" render={() => <UserSignUp signIn={this.signIn}/>} />
 		            <Route exact path="/signout" render={() => <UserSignOut />} />
 			      </Switch>
 			    </div>
