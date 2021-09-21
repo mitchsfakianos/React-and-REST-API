@@ -62,7 +62,11 @@ class CreateCourse extends Component {
             error: data.errors
           })
         })
-      } 
+      } else {
+        this.setState({
+          error: ''
+        })
+      }
     })
   };
 
@@ -71,10 +75,10 @@ class CreateCourse extends Component {
       <Consumer>
         { value => (
           <main>
-              <div class="wrap">
+              <div className="wrap">
                   <h2>Create Course</h2>
                   {this.state.error.length !== 0?( /* validation errors div shows only the field that is empty */ 
-                    <div class="validation--errors">
+                    <div className="validation--errors">
                         <h3>Validation Errors</h3>
                         <ul>
                         {this.state.error[0]?(<li>{this.state.error[0]}</li>):(null)}
@@ -85,26 +89,26 @@ class CreateCourse extends Component {
                     null
                   )}
                   <form>
-                      <div class="main--flex">
+                      <div className="main--flex">
                           <div>
-                              <label for="courseTitle">Course Title</label>
+                              <label htmlFor="courseTitle">Course Title</label>
                               <input id="courseTitle" name="title" type="text" />
 
                               <p>By {value.state.firstName} {value.state.lastName}</p>
 
-                              <label for="courseDescription">Course Description</label>
+                              <label htmlFor="courseDescription">Course Description</label>
                               <textarea id="courseDescription" name="courseDescription"></textarea>
                           </div>
                           <div>
-                              <label for="estimatedTime">Estimated Time</label>
+                              <label htmlFor="estimatedTime">Estimated Time</label>
                               <input id="estimatedTime" name="estimatedTime" type="text" />
 
-                              <label for="materialsNeeded">Materials Needed</label>
+                              <label htmlFor="materialsNeeded">Materials Needed</label>
                               <textarea id="materialsNeeded" name="materialsNeeded"></textarea>
                           </div>
                       </div>
                       {/* once this form is submitted through the button click, createclass function is called*/}
-                      <button class="button" type="submit" onClick={(event) => this.createClass(value.state.id, value.state.auth, value.state.emailAddress, value.state.password, event)}>Create Course</button><NavLink class="button button-secondary" to='/'>Cancel</NavLink>
+                      <button className="button" type="submit" onClick={(event) => this.createClass(value.state.id, value.state.auth, value.state.emailAddress, value.state.password, event)}>Create Course</button><NavLink className="button button-secondary" to='/'>Cancel</NavLink>
                   </form>
               </div>
           </main>

@@ -77,7 +77,11 @@ class UpdateCourse extends Component {
     })
     .then((res) => {
       if(res.status !== 204) {
-        res.json();
+        return res.json();
+      } else {
+        this.setState({
+          error: ''
+        })
       }
     })
     .then((data) => {
@@ -93,10 +97,10 @@ class UpdateCourse extends Component {
       <Consumer>
       { value => (
         <main>
-            <div class="wrap">
+            <div className="wrap">
                 <h2>Update Course</h2>
                   {this.state.error.length !== 0?( // validation errors div shows only the field that is empty 
-                    <div class="validation--errors">
+                    <div className="validation--errors">
                         <h3>Validation Errors</h3>
                         <ul>
                         {this.state.error[0]?(<li>{this.state.error[0]}</li>):(null)}
@@ -107,25 +111,25 @@ class UpdateCourse extends Component {
                     null
                   )}
                 <form>
-                    <div class="main--flex">
+                    <div className="main--flex">
                         <div>
-                            <label for="courseTitle">Course Title</label>
+                            <label htmlFor="courseTitle">Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" defaultValue={this.state.course.title}/>
 
                             <p>By {this.state.firstName} {this.state.lastName}</p>
 
-                            <label for="courseDescription">Course Description</label>
+                            <label htmlFor="courseDescription">Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" defaultValue={this.state.course.description} />
                         </div>
                         <div>
-                            <label for="estimatedTime">Estimated Time</label>
+                            <label htmlFor="estimatedTime">Estimated Time</label>
                             <input id="estimatedTime" name="estimatedTime" type="text" defaultValue={this.state.course.estimatedTime} />
 
-                            <label for="materialsNeeded">Materials Needed</label>
+                            <label htmlFor="materialsNeeded">Materials Needed</label>
                             <textarea id="materialsNeeded" name="materialsNeeded" defaultValue={this.state.course.materialsNeeded} />
                         </div>
                     </div>
-                    <button class="button" type="submit" onClick={(event) => this.onUpdateClass(event, value.state.auth, value.state.emailAddress, value.state.password, value.state.id)}>Update Course</button><NavLink class="button button-secondary" to={`/courses/${this.props.match.params.id}`}>Cancel</NavLink>
+                    <button className="button" type="submit" onClick={(event) => this.onUpdateClass(event, value.state.auth, value.state.emailAddress, value.state.password, value.state.id)}>Update Course</button><NavLink className="button button-secondary" to={`/courses/${this.props.match.params.id}`}>Cancel</NavLink>
                 </form>
             </div>
         </main>

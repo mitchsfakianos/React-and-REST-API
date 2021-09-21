@@ -13,8 +13,6 @@ class UserSignUp extends Component {
   createUser(event) {
     event.preventDefault();
 
-    const {context} = this.props;
-
     let firstName = document.getElementById("firstName").value;
     let lastName = document.getElementById("lastName").value;
     let emailAddress = document.getElementById("emailAddress").value;
@@ -67,10 +65,10 @@ class UserSignUp extends Component {
             <Consumer>
             { value => (
                 <main>
-                    <div class="form--centered">
+                    <div className="form--centered">
                         <h2>Sign Up</h2>
                       {this.state.error.length !== 0?( /* validation errors div shows only the field that is empty */ 
-                        <div class="validation--errors">
+                        <div className="validation--errors">
                             <h3>Validation Errors</h3>
                             <ul>
                             {this.state.error[0]?(<li>{this.state.error[0]}</li>):(null)}
@@ -84,15 +82,15 @@ class UserSignUp extends Component {
                       )}
                         
                         <form onSubmit={this.createUser.bind(this)}>
-                            <label for="firstName">First Name</label>
+                            <label htmlFor="firstName">First Name</label>
                             <input id="firstName" name="firstName" type="text" />
-                            <label for="lastName">Last Name</label>
+                            <label htmlFor="lastName">Last Name</label>
                             <input id="lastName" name="lastName" type="text" />
-                            <label for="emailAddress">Email Address</label>
+                            <label htmlFor="emailAddress">Email Address</label>
                             <input id="emailAddress" name="emailAddress" type="email" />
-                            <label for="password">Password</label>
+                            <label htmlFor="password">Password</label>
                             <input id="password" name="password" type="password" />
-                            <button class="button" type="submit">Sign Up</button><NavLink class="button button-secondary" to="/">Cancel</NavLink>
+                            <button className="button" type="submit">Sign Up</button><NavLink className="button button-secondary" to="/">Cancel</NavLink>
                         </form>
                         <p>Already have a user account? Click here to <NavLink to="/signin">sign in</NavLink>!</p>
                     </div>

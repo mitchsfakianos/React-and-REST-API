@@ -17,15 +17,15 @@ class UserSignIn extends Component {
             { value => {
                 return (
                     <main>
-                        <div class="form--centered">
+                        <div className="form--centered">
                             <h2>Sign In</h2>
                             
                             <form>
-                                <label for="emailAddress">Email Address</label>
+                                <label htmlFor="emailAddress">Email Address</label>
                                 <input id="emailAddress" name="emailAddress" type="email" />
-                                <label for="password">Password</label>
+                                <label htmlFor="password">Password</label>
                                 <input id="password" name="password" type="password" />
-                                <NavLink to="/" class="button" type="submit" onClick={()=> value.signin(document.getElementById("emailAddress").value, document.getElementById("password").value)}>Sign In</NavLink><NavLink class="button button-secondary" to="/">Cancel</NavLink>
+                                <NavLink to="/" className="button" type="submit" onClick={()=> value.signin(document.getElementById("emailAddress").value, document.getElementById("password").value)}>Sign In</NavLink><NavLink className="button button-secondary" to="/">Cancel</NavLink>
                             </form>
                             <p>Don't have a user account? Click here to <NavLink to="/signup">sign up</NavLink>!</p>
                             
