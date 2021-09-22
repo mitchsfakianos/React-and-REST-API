@@ -49,13 +49,13 @@ class UserSignUp extends Component {
       if(res.status === 201) { // if it is a successful sign up, the user is signed in, if not the errors are displayed
         this.props.signIn(emailAddress, password);
       } else {
-        return res.json();
+        return res.json()
+        .then((data) => {
+            this.setState({
+                error: data.errors
+            })
+        })
       }
-    })
-    .then((data) => {
-      this.setState({
-        error: data.errors
-      })
     })
     .catch(console.log);
   }
@@ -81,7 +81,7 @@ class UserSignUp extends Component {
                         null
                       )}
                         
-                        <form onSubmit={this.createUser.bind(this)}>
+                        <form>
                             <label htmlFor="firstName">First Name</label>
                             <input id="firstName" name="firstName" type="text" />
                             <label htmlFor="lastName">Last Name</label>
@@ -90,7 +90,7 @@ class UserSignUp extends Component {
                             <input id="emailAddress" name="emailAddress" type="email" />
                             <label htmlFor="password">Password</label>
                             <input id="password" name="password" type="password" />
-                            <button className="button" type="submit">Sign Up</button><NavLink className="button button-secondary" to="/">Cancel</NavLink>
+                            <NavLink to="/" onClick={() => this.createUser.bind(this)} className="button" type="submit">Sign Up</NavLink><NavLink className="button button-secondary" to="/">Cancel</NavLink>
                         </form>
                         <p>Already have a user account? Click here to <NavLink to="/signin">sign in</NavLink>!</p>
                     </div>

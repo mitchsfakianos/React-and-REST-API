@@ -108,7 +108,7 @@ class CreateCourse extends Component {
                           </div>
                       </div>
                       {/* once this form is submitted through the button click, createclass function is called*/}
-                      <button className="button" type="submit" onClick={(event) => this.createClass(value.state.id, value.state.auth, value.state.emailAddress, value.state.password, event)}>Create Course</button><NavLink className="button button-secondary" to='/'>Cancel</NavLink>
+                      <NavLink className="button" type="submit" onClick={(event) => this.createClass(value.state.id, value.state.auth, value.state.emailAddress, value.state.password, event)}  to="/">Create Course</NavLink><NavLink className="button button-secondary" to='/'>Cancel</NavLink>
                   </form>
               </div>
           </main>

@@ -77,17 +77,17 @@ class UpdateCourse extends Component {
     })
     .then((res) => {
       if(res.status !== 204) {
-        return res.json();
+        return res.json()
+        .then((data) => {
+          this.setState({
+            error: data.errors
+          })
+        })
       } else {
         this.setState({
           error: ''
         })
       }
-    })
-    .then((data) => {
-      this.setState({
-        error: data.errors
-      })
     })
     .catch(console.log);
   }
@@ -129,7 +129,7 @@ class UpdateCourse extends Component {
                             <textarea id="materialsNeeded" name="materialsNeeded" defaultValue={this.state.course.materialsNeeded} />
                         </div>
                     </div>
-                    <button className="button" type="submit" onClick={(event) => this.onUpdateClass(event, value.state.auth, value.state.emailAddress, value.state.password, value.state.id)}>Update Course</button><NavLink className="button button-secondary" to={`/courses/${this.props.match.params.id}`}>Cancel</NavLink>
+                    <NavLink to="/" className="button" type="submit" onClick={(event) => this.onUpdateClass(event, value.state.auth, value.state.emailAddress, value.state.password, value.state.id)}>Update Course</NavLink><NavLink className="button button-secondary" to={`/courses/${this.props.match.params.id}`}>Cancel</NavLink>
                 </form>
             </div>
         </main>

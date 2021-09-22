@@ -2,7 +2,7 @@ import './styles/global.css';
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from './components/Context/index.js'
-import Courses from './components/courses';
+import Courses from './components/Courses.js';
 import CourseDetail from './components/CourseDetail';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
@@ -85,6 +85,8 @@ export default class App extends Component {
 	          isAuthenticated: false
 	        }
 	      });
+
+		window.location.href="/";
 	}
 
 	render () {
@@ -104,7 +106,7 @@ export default class App extends Component {
 			        <Route path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
 			        <Route exact path="/signin" render={() => <UserSignIn signIn={this.signIn}/>} />
 		            <Route exact path="/signup" render={() => <UserSignUp signIn={this.signIn}/>} />
-		            <Route exact path="/signout" render={() => <UserSignOut />} />
+		            <Route exact path="/signout" component={UserSignOut} />
 			      </Switch>
 			    </div>
 			  </Router>
