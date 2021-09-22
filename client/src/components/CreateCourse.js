@@ -66,6 +66,7 @@ class CreateCourse extends Component {
         this.setState({
           error: ''
         })
+        this.props.history.push('/');
       }
     })
   };
