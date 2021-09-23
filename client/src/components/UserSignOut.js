@@ -1,16 +1,17 @@
-import React from 'react';
-import { Consumer } from './Context/index.js';
+import React, { Component} from 'react';
+import { withRouter } from 'react-router-dom';
 
-const UserSignOut = props => {
-    return(
-        <>
-        <Consumer>
-        { value => (
-            value.signout()
-        )}
-        </Consumer>
-        </>
+class UserSignOut extends Component {
+  componentDidMount() {
+  	this.props.signOut();
+  	this.props.history.push('/');
+  }
+
+  render() {
+    return (
+    	null
     )
-}
+  }
+};
 
-export default UserSignOut;
+export default withRouter(UserSignOut);

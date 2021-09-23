@@ -85,8 +85,6 @@ export default class App extends Component {
 	          isAuthenticated: false
 	        }
 	      });
-
-		window.location.href="/";
 	}
 
 	render () {
@@ -106,7 +104,7 @@ export default class App extends Component {
 			        <Route path="/courses/:id" render={(props) => <CourseDetail {...props} />} />
 			        <Route exact path="/signin" render={() => <UserSignIn signIn={this.signIn}/>} />
 		            <Route exact path="/signup" render={() => <UserSignUp signIn={this.signIn}/>} />
-		            <Route exact path="/signout" component={UserSignOut} />
+		            <Route path="/signout" render={() => <UserSignOut signOut={this.signOut}/>} />
 			      </Switch>
 			    </div>
 			  </Router>
