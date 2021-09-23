@@ -63,7 +63,7 @@ export default class App extends Component {
 			          isAuthenticated: true
 			        }
 			      }) 
-	    	  );		
+	    	  );
 	    	} 
 	    })
 	    .catch((err) => {

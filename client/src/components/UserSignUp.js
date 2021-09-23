@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { Consumer } from './Context/index.js';
 
 class UserSignUp extends Component {
@@ -47,7 +47,11 @@ class UserSignUp extends Component {
     })
     .then((res) => {
       if(res.status === 201) { // if it is a successful sign up, the user is signed in, if not the errors are displayed
-        this.props.signIn(emailAddress, password);
+            this.setState({
+                error: ''
+            });
+            this.props.signIn(emailAddress, password);
+            this.props.history.push('/');
       } else {
         return res.json()
         .then((data) => {
@@ -81,7 +85,7 @@ class UserSignUp extends Component {
                         null
                       )}
                         
-                        <form>
+                        <form onSubmit={this.createUser.bind(this)}>
                             <label htmlFor="firstName">First Name</label>
                             <input id="firstName" name="firstName" type="text" />
                             <label htmlFor="lastName">Last Name</label>
@@ -90,7 +94,7 @@ class UserSignUp extends Component {
                             <input id="emailAddress" name="emailAddress" type="email" />
                             <label htmlFor="password">Password</label>
                             <input id="password" name="password" type="password" />
-                            <NavLink to="/" onClick={() => this.createUser.bind(this)} className="button" type="submit">Sign Up</NavLink><NavLink className="button button-secondary" to="/">Cancel</NavLink>
+                            <button className="button" type="submit">Sign Up</button><NavLink className="button button-secondary" to="/">Cancel</NavLink>
                         </form>
                         <p>Already have a user account? Click here to <NavLink to="/signin">sign in</NavLink>!</p>
                     </div>
@@ -101,4 +105,4 @@ class UserSignUp extends Component {
     }
 }
 
-export default UserSignUp;
+export default withRouter(UserSignUp);
