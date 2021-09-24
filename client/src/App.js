@@ -2,7 +2,7 @@ import './styles/global.css';
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from './components/Context/index.js'
-import Courses from './components/Courses.js';
+import Courses from './components/courses.js';
 import CourseDetail from './components/CourseDetail';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
